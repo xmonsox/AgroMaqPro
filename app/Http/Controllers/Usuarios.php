@@ -8,9 +8,18 @@ class Usuarios extends Controller
 {
     public function VisualizarUsuarios(){
         $users = Usuario::get();
-        return view('usuarios', ['users' => $users]);
+        $data = [
+            'status'=> true,
+            'userData'=> $users,
+        ];
+        return response()->json($data);
     }
-
+    public function viewUsers(){
+        return view('usuarios');
+    }
+    public function index(){
+        return view('ViewDefault');
+    }
     public function InsertarUsuario(Request $request)
     {
         $users = new Usuario;
@@ -21,9 +30,13 @@ class Usuarios extends Controller
         $users->email = $request->input('email');
         $users->rol = $request->input('rol');
         $users->salario = $request->input('salario');
-        $users->contraseña = $request->input('contraseña');
+        $users->contraseña = $request->input('password');
         $users->save();
-        // return response()->json(['message' => 'Operación exitosa']);
-        return redirect()->route('usuarios.index');
+
+        $data = [
+            'status' => true,
+            'users' => $users
+        ];
+        return response()->json($request);
     }
 }

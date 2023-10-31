@@ -320,7 +320,7 @@ return [
         ],
         [
             'text'        => 'Usuarios',
-            'route'       => 'usuarios.imprimirUsers',
+            'route'       => 'viewUsers',
             'icon'        => 'fas fa-fw fa-user',
         ],
         [

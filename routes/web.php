@@ -17,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 //ROOTES DE LOS USUARIOS
+Route::get("", [Usuarios::class, 'index']);;
 //insertar
-Route::post("/insertar", [Usuarios::class, "InsertarUsuario"])->name("usuarios.insertar");
+Route::post("/registerUser", [Usuarios::class, "InsertarUsuario"])->name("usuarios.insertar");
 //general
-Route::get('/', [Usuarios::class, 'VisualizarUsuarios'])->name('usuarios.imprimirUsers');
+Route::get('/User/usuariosShow', [Usuarios::class, 'VisualizarUsuarios'])->name("usuarios.imprimirUsers");
+
+Route::get('/ViewUsers', [Usuarios::class, 'viewUsers'])->name("viewUsers");

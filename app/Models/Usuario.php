@@ -16,5 +16,13 @@ class Usuario extends Model
     public function usuarios_asignaciones() : HasMany{
         return $this->hasMany(Assignament::class);
     }
+
+    // protected $fillable = [
+    //     'documento',
+    //     'email',
+    //     'rol',
+    //     'id',
+    //     'nombre',
+    // ];
 }
 
