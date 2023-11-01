@@ -312,8 +312,8 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
+            'text'        => 'Principal',
+            'route'       => 'Inicio',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
@@ -329,7 +329,7 @@ return [
         ],
         [
             'text'        => 'Proveedores',
-            'url'         => 'admin/pages',
+            'route'       => 'viewSupp',
             'icon'        => 'fas fa-fw fa-user',
         ],
         [

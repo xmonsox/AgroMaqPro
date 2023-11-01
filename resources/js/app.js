@@ -4,8 +4,14 @@ import Vue from 'vue';
 
 window.Vue = require('vue');
 
-Vue.component('general', require('./components/General.vue').default);
-Vue.component('editar', require('./components/Editar.vue').default);
+//Usuarios
+Vue.component('general', require('./components/Usuarios/General.vue').default);
+Vue.component('editar', require('./components/Usuarios/Editar.vue').default);
+
+//Proveedor
+Vue.component('showsuppliers', require('./components/Proveedores/ShowSuppliers.vue').default);
+
+// Vue.component('editar', require('./components/Usuarios/Editar.vue').default);
 
 const app = new Vue({
     el: '#app',

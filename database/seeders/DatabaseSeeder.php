@@ -41,6 +41,12 @@ class DatabaseSeeder extends Seeder
                 'estado' => $faker->randomElement(['Completada', 'Proceso', 'Pendiente']),
                 'tipo_actividad' => $faker->randomElement($tiposActividad), // Asigna un valor aleatorio de $tiposActividad
             ]);
+            \App\Models\Supplier::factory()->create([
+                'nombre' => $faker->company,
+                'telefono' => $faker->phoneNumber,
+                'direccion' => $faker->address,
+                'email' => $faker->unique()->safeEmail,
+            ]);
         }
     }
 }

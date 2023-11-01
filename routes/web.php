@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Suppliers;
 use App\Http\Controllers\Usuarios;
 use Illuminate\Support\Facades\Route;
 
@@ -17,10 +18,23 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 //ROOTES DE LOS USUARIOS
-Route::get("", [Usuarios::class, 'index']);;
+Route::get("", [Usuarios::class, 'index'])->name("Inicio");;
 //insertar
 Route::post("/registerUser", [Usuarios::class, "InsertarUsuario"])->name("usuarios.insertar");
 //general
 Route::get('/User/usuariosShow', [Usuarios::class, 'VisualizarUsuarios'])->name("usuarios.imprimirUsers");
-
+//VerUsuarios
 Route::get('/ViewUsers', [Usuarios::class, 'viewUsers'])->name("viewUsers");
+// editar
+Route::put("/Users/UpdateUsers/{id}", [Usuarios::class, 'updateUser'])->name('updateUser');
+//eliminar
+Route::delete("/Users/DeleteUser/{id}", [Usuarios::class, 'deleteUser'])->name('deleteUser');
+
+//ROUTES DE LOS PROVEEDORES
+//general
+Route::get('/Suppliers/SuppliersShow', [Suppliers::class, 'showSupplier'])->name("Suppliers");
+//VerProveedores
+Route::get('/ViewSuppliers', [Suppliers::class, 'viewSuppliers'])->name("viewSupp");
+//RegistrarProveedores
+Route::post("/registerSupplier", [Suppliers::class, "InsertSupplier"])->name("insertSupplier");
+
