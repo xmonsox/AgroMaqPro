@@ -30,26 +30,65 @@ class Suppliers extends Controller
 
     //funcion para hacer el registrar
     public function InsertSupplier(Request $request)
-{
-    $request->validate([
-        'nombre' => 'required|string',
-        'celular' => 'required|string',
-        'direccion' => 'required|string',
-        'email' => 'required|email',
-    ]);
+    {
+        $request->validate([
+            'nombre' => 'required|string|unique:suppliers', // Verifica que el nombre sea único en la tabla 'suppliers'
+            'telefono' => 'required|string|unique:suppliers', // Verifica que el celular sea único en la tabla 'suppliers'
+            'direccion' => 'required|string|unique:suppliers', // Verifica que la dirección sea única en la tabla 'suppliers'
+            'email' => 'required|email|unique:suppliers', // Verifica que el email sea único en la tabla 'suppliers'
+        ]);
 
-    $supplier = new Supplier;
-    $supplier->nombre = $request->input('nombre');
-    $supplier->telefono = $request->input('celular');
-    $supplier->direccion = $request->input('direccion');
-    $supplier->email = $request->input('email');
-    $supplier->save();
+        // Si llegas a este punto, significa que los datos son únicos y puedes proceder a registrar el proveedor.
 
-    $data = [
-        'status' => true,
-        'supplier' => $supplier
-    ];
+        $supplier = new Supplier;
+        $supplier->nombre = $request->input('nombre');
+        $supplier->telefono = $request->input('telefono');
+        $supplier->direccion = $request->input('direccion');
+        $supplier->email = $request->input('email');
+        $supplier->save();
 
-    return response()->json($data);
-}
+        $data = [
+            'status' => true,
+            'supplier' => $supplier
+        ];
+
+        return response()->json($data);
+    }
+
+    public function updateSuppliers(Request $request, $id)
+    {
+        $request->validate([
+            'nombre' => 'required|string',
+            'telefono' => 'required|string',
+            'direccion' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        $supplier = Supplier::find($id);
+        $supplier->id = $request->input('id');
+        $supplier->nombre = $request->input('nombre');
+        $supplier->telefono = $request->input('telefono');
+        $supplier->direccion = $request->input('direccion');
+        $supplier->email = $request->input('email');
+        // $supplier->contraseña = $request->input('password');
+        $supplier->save();
+        $data = [
+            'status' => true,
+            'supplier' => $supplier,
+            'id' => $id,
+            'request' => $request,
+        ];
+        return response()->json($data);
+    }
+    public function deleteSuppliers($id)
+    {
+        $supplier = Supplier::find($id);
+        if (!$supplier) {
+            return response()->json(['status' => false, 'message' => 'Supplier no encontrado']);
+        }
+
+        // Realiza la eliminación del usuario
+        $supplier->delete();
+        return response()->json(['status' => true, 'message' => 'Supplier eliminado con éxito']);
+    }
 }

@@ -37,4 +37,7 @@ Route::get('/Suppliers/SuppliersShow', [Suppliers::class, 'showSupplier'])->name
 Route::get('/ViewSuppliers', [Suppliers::class, 'viewSuppliers'])->name("viewSupp");
 //RegistrarProveedores
 Route::post("/registerSupplier", [Suppliers::class, "InsertSupplier"])->name("insertSupplier");
-
+// editarProveedor
+Route::put("/Suppliers/UpdateSuppliers/{id}", [Suppliers::class, 'updateSuppliers'])->name('updateSuppliers');
+//eliminar
+Route::delete("/Suppliers/DeleteSuppliers/{id}", [Suppliers::class, 'deleteSuppliers'])->name('deleteSuppliers');

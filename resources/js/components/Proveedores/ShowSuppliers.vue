@@ -21,35 +21,36 @@
                         <td>{{ listSupp.telefono }}</td>
                         <td>{{ listSupp.direccion }}</td>
                         <td>{{ listSupp.email }}</td>
-                        <td><button class="btn btn-warning" @click="mostrarEditar(listSupp)"><i
+                        <td><button class="btn btn-warning" @click="showEditar(listSupp)"><i
                                     class="fa-solid fa-pen-to-square"></i></button></td>
-                        <td><button class="btn btn-danger" @click="eliminarUsuario(listSupp.id)"><i
+                        <td><button class="btn btn-danger" @click="deleteSupplier(listSupp.id)"><i
                                     class="fa-solid fa-trash"></i></button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <registersupplier v-if="!status"></registersupplier>
-        <!-- <editar v-if="editar" :Userdata="userStatus"></editar> -->
+        <updatesupplier v-if="updateSuppliers" :Supplierdata="supplierStatus"></updatesupplier>
 
     </div>
 </template>
 <script>
     import RegisterSupplier from "./RegisterSupplier.vue";
-// import Editar from "./Editar.vue";
+    import UpdateSuppliers from "./UpdateSuppliers.vue";
 export default {
     components: {
         'registersupplier': RegisterSupplier,
-        // 'editar': Editar,
+        'updatesupplier': UpdateSuppliers,
     },
     data() {
         return {
             //crear arreglo
             listSupplier: [],
-            userStatus: {},
+            supplierStatus: {},
             viewListSupp: true,
             viewEditar: false,
             status: true,
+            updateSuppliers: true,
             // email: '',
             // documento: '',
             // nombre: '',
@@ -66,23 +67,23 @@ export default {
         },
         BackList() {
             this.status = true;
-            // this.viewEditar = false;
+            this.viewEditar = false;
             this.viewListSupp = true;
 
         },
-        // mostrarEditar(Userdata) {
-        //     this.userStatus = Userdata
-        //     this.viewEditar = true;
-        //     this.viewListSupp = false;
-        //     this.status = true;
-        // },
-        // edit_status(Userdata){
-        // },
+        showEditar(Supplierdata) {
+            console.log("Datos recibidos:", Supplierdata);
+            this.supplierStatus = Supplierdata;
+            this.updateSuppliers = true;
+            this.viewListSupp = false;
+            this.status = true;
+        },
         listSuppliers() {
             axios.get('/Suppliers/SuppliersShow').then(respuesta => {
                 console.log("Respuesta del servidor");
                 console.log(respuesta.data);
                 this.listSupplier = respuesta.data.supplierData;
+                this.updateSuppliers = false;
                 this.viewListSupp = true;
             }).catch(error => {
                 console.log("Error en servidor");
@@ -90,18 +91,19 @@ export default {
                 console.log(error.response);
             });
         },
-        // eliminarUsuario(id) {
-        //     if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-        //         axios.delete(`/Users/DeleteUser/${id}`).then((response) => {
-        //             if (response.data.status === true) {
-        //                 // Actualiza la lista de usuarios después de la eliminación
-        //                 this.listUser();
-        //             }
-        //         }).catch((error) => {
-        //             console.log("Error al eliminar el usuario: " + error);
-        //         });
-        //     }
-        // },
+        deleteSupplier(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este Supplier?')) {
+                axios.delete(`/Suppliers/DeleteSuppliers/${id}`).then((response) => {
+                    if (response.data.status === true) {
+                        // Actualiza la lista de usuarios después de la eliminación
+                        this.listSuppliers(); // Cambia listSupplier a listSuppliers
+                    }
+                }).catch((error) => {
+                    console.log("Error al eliminar el Supplier: " + error);
+                });
+            }
+        },
+
     },
 };
 </script>
