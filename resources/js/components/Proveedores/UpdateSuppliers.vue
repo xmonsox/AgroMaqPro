@@ -73,7 +73,7 @@ export default {
                     if (respuesta.data.status) {
                         console.log("Actualización exitosa");
                         Swal.fire(
-                            'Good job!',
+                            'Excelente!',
                             'You clicked the button!',
                             'success'
                         )
@@ -81,7 +81,11 @@ export default {
                         this.$parent.BackList();
                     } else {
                         console.log("Error: Los datos están duplicados");
-                        alert("Los datos ya se encuentran registrados");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Algo Salio mal! (puede ser un campo vacio)',
+                        })
                     }
                 })
                 .catch(error => {

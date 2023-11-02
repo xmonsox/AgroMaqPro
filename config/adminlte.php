@@ -314,9 +314,7 @@ return [
         [
             'text'        => 'Principal',
             'route'       => 'Inicio',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'icon'        => 'fa-solid fa-circle-info',
         ],
         [
             'text'        => 'Usuarios',
@@ -324,13 +322,14 @@ return [
             'icon'        => 'fas fa-fw fa-user',
         ],
         [
-            'text'        => 'Actividades',
-            'url'         => 'admin/pages',
+            'text'        => 'Repuestos',
+            'route'       => 'viewRepuestos',
+            'icon'        => 'fa-solid fa-gear',
         ],
         [
             'text'        => 'Proveedores',
             'route'       => 'viewSupp',
-            'icon'        => 'fas fa-fw fa-user',
+            'icon'        => 'fa-solid fa-truck-fast',
         ],
         [
             'text'        => 'Maquinaria',

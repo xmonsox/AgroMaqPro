@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Suppliers;
+use App\Http\Controllers\Repuestos;
 use App\Http\Controllers\Usuarios;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +42,17 @@ Route::post("/registerSupplier", [Suppliers::class, "InsertSupplier"])->name("in
 Route::put("/Suppliers/UpdateSuppliers/{id}", [Suppliers::class, 'updateSuppliers'])->name('updateSuppliers');
 //eliminar
 Route::delete("/Suppliers/DeleteSuppliers/{id}", [Suppliers::class, 'deleteSuppliers'])->name('deleteSuppliers');
+
+//ROUTES DE LOS PROVEEDORES
+//general
+Route::get('/Repuestos/RepuestosShow', [Repuestos::class, 'showRepuestos'])->name("Repuestoss");
+// VerProveedores
+Route::get('/ViewRepuestos', [Repuestos::class, 'viewRepuestos'])->name("viewRepuestos");
+//consulta para traer proveedores
+Route::get('/TraerProveedores', [Repuestos::class, 'getProveedores']);
+//RegistrarProveedores
+Route::post("/registerRepuesto", [Repuestos::class, "InsertRepuesto"])->name("insertRepuesto");
+// editarProveedor
+Route::put("/Repuestos/UpdateRepuestos/{id}", [Repuestos::class, 'updateRepuestos'])->name('updateRepuestos');
+//eliminar
+Route::delete("/Repuestos/DeleteRepuestos/{id}", [Repuestos::class, 'deleteRepuestos'])->name('deleteRepuestos');
