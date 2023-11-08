@@ -1,45 +1,17 @@
 <template>
-    <div class="container">
-        <!-- Muestra la lista de proveedores si viewListSupp es verdadero -->
-        <div v-if="viewListSupp" style="height: 100vh; overflow-y: scroll;">
-            <!-- Botón para agregar un proveedor -->
-            <button class="btn btn-success mb-3 mt-1" @click="viewRegister()">AÑADIR PROVEEDOR</button>
-            <!-- Tabla para mostrar la lista de proveedores -->
-            <table class="table mb-3">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">NOMBRE</th>
-                        <th scope="col">TELEFONO</th>
-                        <th scope="col">DIRECCION</th>
-                        <th scope="col">E-MAIL</th>
-                        <th scope="col">EDITAR</th>
-                        <th scope="col">ELIMINAR</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Itera sobre la lista de proveedores y muestra sus detalles -->
-                    <tr v-for="listSupp in listSupplier">
-                        <th scope="row">{{ listSupp.id }}</th>
-                        <td>{{ listSupp.nombre }}</td>
-                        <td>{{ listSupp.telefono }}</td>
-                        <td>{{ listSupp.direccion }}</td>
-                        <td>{{ listSupp.email }}</td>
-                        <!-- Botón para editar un proveedor -->
-                        <td><button class="btn btn-warning" @click="showEditar(listSupp)"><i
-                                class="fa-solid fa-pen-to-square"></i></button></td>
-                        <!-- Botón para eliminar un proveedor -->
-                        <td><button class="btn btn-danger" @click="deleteSupplier(listSupp.id)"><i
-                                class="fa-solid fa-trash"></i></button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- Muestra el componente para registrar un proveedor si status es falso -->
-        <registersupplier v-if="!status"></registersupplier>
-        <!-- Muestra el componente para actualizar un proveedor si updateSuppliers es verdadero y pasa los datos del proveedor a través de props -->
-        <updatesupplier v-if="updateSuppliers" :Supplierdata="supplierStatus"></updatesupplier>
-    </div>
+    <v-app>
+        <v-main>
+            <v-card>
+                <v-card-title>
+                    PROVEEDORES
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                        hide-details></v-text-field>
+                </v-card-title>
+                <v-data-table :headers="headers" :items="desserts" :search="search"></v-data-table>
+            </v-card>
+        </v-main>
+    </v-app>
 </template>
 <script>
 import RegisterSupplier from "./RegisterSupplier.vue";
@@ -52,14 +24,22 @@ export default {
     },
     data() {
         return {
-            // Creación de variables de datos
-            listSupplier: [], // Almacena la lista de proveedores
-            supplierStatus: {}, // Almacena los datos de un proveedor seleccionado
-            viewListSupp: true, // Controla la visualización de la lista de proveedores
-            viewEditar: false, // Controla la visualización de la vista de edición
-            status: true, // Controla la visualización del formulario de registro
-            updateSuppliers: true, // Controla la visualización de la vista de actualización
-        };
+            search: '',
+            headers: [
+                {
+                    // text: 'Dessert (100g serving)',
+                    align: 'start',
+                    sortable: false,
+                    value: 'name',
+                },
+                { text: 'ID', value: 'id' },
+                { text: 'Nombre', value: 'nombre' },
+                { text: 'Telefono', value: 'telefono' },
+                { text: 'Direccion', value: 'direccion' },
+                { text: 'Email', value: 'email' },
+            ],
+            desserts: [],
+        }
     },
     created() {
         // Ejecuta la función listSuppliers al cargar el componente
@@ -87,6 +67,7 @@ export default {
         // Obtiene la lista de proveedores desde el servidor
         listSuppliers() {
             axios.get('/Suppliers/SuppliersShow').then(respuesta => {
+                this.desserts = respuesta.data.supplierData;
                 this.listSupplier = respuesta.data.supplierData;
                 this.updateSuppliers = false;
                 this.viewListSupp = true;
@@ -117,3 +98,7 @@ export default {
     },
 };
 </script>
+<!-- Muestra el componente para registrar un proveedor si status es falso
+<registersupplier v-if="!status"></registersupplier>
+Muestra el componente para actualizar un proveedor si updateSuppliers es verdadero y pasa los datos del proveedor a través de props
+<updatesupplier v-if="updateSuppliers" :Supplierdata="supplierStatus"></updatesupplier> -->

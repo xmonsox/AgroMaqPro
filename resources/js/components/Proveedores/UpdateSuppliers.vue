@@ -38,7 +38,7 @@
             </form>
         </div>
         <!-- <formulario v-if="!status"></formulario> -->
-        <button class="btn btn-danger" type="button" @click="general()">Volver</button>
+        <button class="btn btn-danger" type="button" @click="enviarDatos()">Volver</button>
     </div>
 </template>
 <script>
@@ -63,7 +63,7 @@ export default {
         console.log("SuppEdit", this.SuppEdit);
     },
     methods: {
-        general() {
+        enviarDatos() {
             this.$parent.BackList();
         },
         UpdateSupplier() {
@@ -77,8 +77,8 @@ export default {
                             'You clicked the button!',
                             'success'
                         )
-                        this.$parent.listSuppliers();
                         this.$parent.BackList();
+                        this.$parent.listSuppliers();
                     } else {
                         console.log("Error: Los datos están duplicados");
                         Swal.fire({

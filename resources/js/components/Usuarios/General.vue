@@ -95,16 +95,36 @@ export default {
             });
         },
         eliminarUsuario(id) {
-            if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-                axios.delete(`/Users/DeleteUser/${id}`).then((response) => {
-                    if (response.data.status === true) {
-                        // Actualiza la lista de usuarios después de la eliminación
-                        this.listUser();
-                    }
-                }).catch((error) => {
-                    console.log("Error al eliminar el usuario: " + error);
-                });
-            }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(`/Users/DeleteUser/${id}`).then((response) => {
+                        if (response.data.status === true) {
+                            this.listUser();
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                            'success'
+                            )
+                        }
+                    }).catch((error) => {
+                        console.log("Error al eliminar el Supplier: " + error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Algo Salio mal!',
+                        })
+                    });
+                }
+            })
+                    
         },
     },
 };

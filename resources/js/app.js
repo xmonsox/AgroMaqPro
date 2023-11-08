@@ -1,6 +1,9 @@
 import './bootstrap';
 
 import Vue from 'vue';
+import Vuetify from 'vuetify';
+
+Vue.use(Vuetify);
 
 window.Vue = require('vue');
 
@@ -18,4 +21,5 @@ Vue.component('updaterepuestos', require('./components/Repuestos/UpdateRepuestos
 
 const app = new Vue({
     el: '#app',
+    vuetify: new Vuetify(),
 });

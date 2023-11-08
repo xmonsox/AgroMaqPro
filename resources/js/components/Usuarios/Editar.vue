@@ -98,11 +98,19 @@
                 axios.put(`/Users/UpdateUsers/${this.datosEdit.id}`, this.datosEdit).then(respuesta => {
                     console.log("Respuesta del servidor");
                     console.log(respuesta.data);
+                    Swal.fire(
+                        'Excelente!',
+                    )
                     this.$parent.listUser();
                     this.$parent.volverFormulario();
                 }).catch(error => {
                     console.log("Error en servidor");
                     console.log(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Algo Salio mal!',
+                    })
                     console.log(error.response);
                 });
             },

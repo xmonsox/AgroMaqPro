@@ -74,6 +74,7 @@
     </div>
 </template>
 <script>
+    import Swal from 'sweetalert2'
     export default {
         data(){
             return{
@@ -102,11 +103,21 @@
                     console.log("datos enviados al registrar",this.registerUser);
                     axios.post('/registerUser', this.registerUser).then(respuesta => {
                     console.log("Respuesta ", respuesta.data);
+                    Swal.fire(
+                        'Registro Exitoso!',
+                        'You clicked the button!',
+                        'success'
+                    )
                     this.$parent.listUser();
                     this.$parent.volverFormulario();
                 }).catch(error => {
                     console.log("Error en servidor");
                     console.log(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Algo Salio mal!',
+                    })
                     console.log(error.response);
                 });
             }

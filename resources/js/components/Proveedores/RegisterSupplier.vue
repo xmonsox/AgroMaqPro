@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div>
-            <h3 class="text-center"><b>AÑADIR USUARIO</b></h3>
+            <h3 class="text-center"><b>AÑADIR PROVEEDOR</b></h3>
             <form action="">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
@@ -51,7 +51,7 @@ export default {
     methods: {
 
         enviarDatos() {
-            this.$parent.volverFormulario();
+            this.$parent.BackList();
         },
         saveRegister() {
             console.log("Datos enviados al registrar", this.registerSuppliers);

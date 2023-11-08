@@ -82,7 +82,7 @@ export default {
         //Vuelve a la lista de proveedores
         BackList() {
             this.status = true;
-            // this.viewEditar = false;
+            this.viewUpdate = false;
             this.viewListRepuesto = true;
         },
         //Muestra la vista de edición de un proveedor y pasa sus datos
