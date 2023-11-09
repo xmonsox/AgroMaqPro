@@ -46,6 +46,7 @@
                                 <option value="Aseadora">Aseadora</option>
                                 <option value="Mantenimiento">Mantenimiento</option>
                                 <option value="Gerente">Gerente</option>
+                                <option value="Admin">Admin</option>
                                 <option value="Conductor">Conductor</option>
                             </select>
 

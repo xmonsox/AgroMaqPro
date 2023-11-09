@@ -2662,6 +2662,10 @@ var render = function render() {
     }
   }, [_vm._v("Gerente")]), _vm._v(" "), _c("option", {
     attrs: {
+      value: "Admin"
+    }
+  }, [_vm._v("Admin")]), _vm._v(" "), _c("option", {
+    attrs: {
       value: "Conductor"
     }
   }, [_vm._v("Conductor")])])])])]), _vm._v(" "), _c("div", {

@@ -43,9 +43,9 @@ Route::put("/Suppliers/UpdateSuppliers/{id}", [Suppliers::class, 'updateSupplier
 //eliminar
 Route::delete("/Suppliers/DeleteSuppliers/{id}", [Suppliers::class, 'deleteSuppliers'])->name('deleteSuppliers');
 
-//ROUTES DE LOS PROVEEDORES
+//ROUTES DE LOS REPUESTOS
 //general
-Route::get('/Repuestos/RepuestosShow', [Repuestos::class, 'showRepuestos'])->name("Repuestoss");
+Route::get('/Repuestos/RepuestosShow', [Repuestos::class, 'showRepuestos'])->name("Repuestos");
 // VerProveedores
 Route::get('/ViewRepuestos', [Repuestos::class, 'viewRepuestos'])->name("viewRepuestos");
 //consulta para traer proveedores
