@@ -19,6 +19,12 @@ Vue.component('updatesuppliers', require('./components/Proveedores/UpdateSupplie
 Vue.component('showrepuestos', require('./components/Repuestos/ShowRepuestos.vue').default);
 Vue.component('updaterepuestos', require('./components/Repuestos/UpdateRepuestos.vue').default);
 
+//Repuestos
+Vue.component('showmachinery', require('./components/Machinery/Machinery.vue').default);
+Vue.component('updaterepuestos', require('./components/Repuestos/UpdateRepuestos.vue').default);
+
+
+
 const app = new Vue({
     el: '#app',
     vuetify: new Vuetify(),

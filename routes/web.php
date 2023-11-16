@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Suppliers;
+use App\Http\Controllers\MachineryController;
 use App\Http\Controllers\Repuestos;
 use App\Http\Controllers\Usuarios;
 use Illuminate\Support\Facades\Route;
@@ -16,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/', function () {
-//     return view('welcome');
+//     return view('ViewDefault');
 // });
 //ROOTES DE LOS USUARIOS
-Route::get("", [Usuarios::class, 'index'])->name("Inicio");;
+Route::get("/", [Usuarios::class, 'index'])->name("Inicio");
 //insertar
 Route::post("/registerUser", [Usuarios::class, "InsertarUsuario"])->name("usuarios.insertar");
 //general
@@ -45,7 +46,7 @@ Route::delete("/Suppliers/DeleteSuppliers/{id}", [Suppliers::class, 'deleteSuppl
 
 //ROUTES DE LOS PROVEEDORES
 //general
-Route::get('/Repuestos/RepuestosShow', [Repuestos::class, 'showRepuestos'])->name("Repuestoss");
+Route::get('/Repuestos/RepuestosShow', [Repuestos::class, 'showRepuestos'])->name("Repuestos");
 // VerProveedores
 Route::get('/ViewRepuestos', [Repuestos::class, 'viewRepuestos'])->name("viewRepuestos");
 //consulta para traer proveedores
@@ -56,3 +57,17 @@ Route::post("/registerRepuesto", [Repuestos::class, "InsertRepuesto"])->name("in
 Route::put("/Repuestos/UpdateRepuestos/{id}", [Repuestos::class, 'updateRepuestos'])->name('updateRepuestos');
 //eliminar
 Route::delete("/Repuestos/DeleteRepuestos/{id}", [Repuestos::class, 'deleteRepuestos'])->name('deleteRepuestos');
+
+//ROUTES DE LA MAQUINARIA
+//general
+Route::get('/Machinery/MachineryShow', [MachineryController::class, 'showMachinery'])->name("Machinery");
+// VerProveedores
+Route::get('/ViewMachinery', [MachineryController::class, 'viewMachinery'])->name("ViewMachinery");
+//consulta para traer proveedores
+// Route::get('/GetMachinery', [MachineryController::class, 'getMachinery']);
+//RegistrarProveedores
+Route::post("/registerMachinery", [Repuestos::class, "InsertMachinery"])->name("insertMachinery");
+// // editarProveedor
+// Route::put("/Repuestos/UpdateRepuestos/{id}", [Repuestos::class, 'updateRepuestos'])->name('updateRepuestos');
+// //eliminar
+// Route::delete("/Repuestos/DeleteRepuestos/{id}", [Repuestos::class, 'deleteRepuestos'])->name('deleteRepuestos');

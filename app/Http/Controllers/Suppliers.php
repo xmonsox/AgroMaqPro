@@ -46,13 +46,19 @@ class Suppliers extends Controller
         $supplier->direccion = $request->input('direccion');
         $supplier->email = $request->input('email');
         $supplier->save();
-
+        $suppliers = Supplier::get();
         $data = [
             'status' => true,
-            'supplier' => $supplier
-        ];
-
+            'supplierData' => $suppliers
+            ];
         return response()->json($data);
+
+        // $data = [
+        //     'status' => true,
+        //     'supplier' => $supplier
+        // ];
+
+        // return response()->json($data);
     }
 
     public function updateSuppliers(Request $request, $id)
@@ -72,12 +78,19 @@ class Suppliers extends Controller
         $supplier->email = $request->input('email');
         // $supplier->contraseña = $request->input('password');
         $supplier->save();
+        // $data = [
+        //     'status' => true,
+        //     'supplier' => $supplier,
+        //     'id' => $id,
+        //     'request' => $request,
+        // ];
+        // return response()->json($data);
+
+        $suppliers = Supplier::get();
         $data = [
             'status' => true,
-            'supplier' => $supplier,
-            'id' => $id,
-            'request' => $request,
-        ];
+            'supplierData' => $suppliers
+            ];
         return response()->json($data);
     }
     public function deleteSuppliers($id)
@@ -90,5 +103,11 @@ class Suppliers extends Controller
         // Realiza la eliminación del usuario
         $supplier->delete();
         return response()->json(['status' => true, 'message' => 'Supplier eliminado con éxito']);
+        $suppliers = Supplier::get();
+        $data = [
+            'status' => true,
+            'supplierData' => $suppliers
+            ];
+        return response()->json($data);
     }
 }

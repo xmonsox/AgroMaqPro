@@ -333,7 +333,8 @@ return [
         ],
         [
             'text'        => 'Maquinaria',
-            'url'         => 'admin/pages',
+            'route'       => 'ViewMachinery',
+            'icon'        =>  'fa-solid fa-truck-monster',
         ],
 
         ['header' => 'labels'],

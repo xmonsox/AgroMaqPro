@@ -4,13 +4,13 @@
             <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
                 <template v-slot:top>
                     <v-toolbar flat>
-                        <v-toolbar-title>PROVEEDORES</v-toolbar-title>
+                        <v-toolbar-title>MACHINERY</v-toolbar-title>
                         <v-divider class="mx-4" inset vertical></v-divider>
                         <v-spacer></v-spacer>
                         <v-dialog v-model="dialog" max-width="500px">
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                                    NEW SUPPLIERS
+                                    NEW MACHINERY
                                 </v-btn>
                             </template>
                             <v-card>
@@ -25,16 +25,16 @@
                                                 <v-text-field v-model="registerSuppliers.id" label="Id"></v-text-field>
                                             </v-col> -->
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="registerSuppliers.nombre" label="Nombre"></v-text-field>
+                                                <v-text-field v-model="registerMachinery.nombre" label="Nombre"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="registerSuppliers.telefono" label="Telefono"></v-text-field>
+                                                <v-text-field v-model="registerMachinery.cantidad" label="Cantidad"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="registerSuppliers.direccion" label="Direccion"></v-text-field>
+                                                <v-text-field v-model="registerMachinery.tipo_maquinaria" label="Tipo Maquinaria"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="registerSuppliers.email" label="E-mail"></v-text-field>
+                                                <v-text-field v-model="registerMachinery.estado" label="Estado"></v-text-field>
                                             </v-col>
 
                                         </v-row>
@@ -83,9 +83,7 @@
     </v-app>
 </template>
 <script>
-import RegisterSupplier from "./RegisterSupplier.vue";
-import UpdateSuppliers from "./UpdateSuppliers.vue";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 export default {
     data: () => ({
         dialog: false,
@@ -97,25 +95,29 @@ export default {
                 value: 'name',
             },
             { text: 'Nombre', value: 'nombre' },
-            { text: 'Telefono', value: 'telefono' },
-            { text: 'Direccion', value: 'direccion' },
-            { text: 'E-mail', value: 'email' },
+            { text: 'Matricula', value: 'matricula' },
+            { text: 'Cantidad', value: 'cantidad' },
+            { text: 'TipoMaquinaria', value: 'tipo_maquinaria' },
+            { text: 'Estado', value: 'estado' },
             { text: 'Actions', value: 'actions', sortable: false },
         ],
         desserts: [],
         editedIndex: -1,
-        registerSuppliers: {
+        registerMachinery: {
             id: '',
+            matricula: '',
             nombre: '',
-            telefono: '',
-            direccion: '',
-            email: '',
+            cantidad: '',
+            tipo_maquinaria: '',
+            estado: '',
         },
         defaultItem: {
+            id: '',
+            matricula: '',
             nombre: '',
-            telefono: '',
-            direccion: '',
-            email: '',
+            cantidad: '',
+            tipo_maquinaria: '',
+            estado: '',
         },
     }),
 
@@ -140,10 +142,10 @@ export default {
 
     methods: {
         initialize() {
-            axios.get('/Suppliers/SuppliersShow').then(respuesta => {
-                this.desserts = respuesta.data.supplierData;
-                this.updateSuppliers = false;
-                this.viewListSupp = true;
+            axios.get('/Machinery/MachineryShow').then(respuesta => {
+                this.desserts = respuesta.data.machineryData;
+                // this.updateSuppliers = false;
+                // this.viewListSupp = true;
             }).catch(error => {
                 console.log("Error en servidor");
                 console.log(error);
@@ -268,7 +270,3 @@ export default {
     },
 }
 </script>
-<!-- Muestra el componente para registrar un proveedor si status es falso
-<registersupplier v-if="!status"></registersupplier>
-Muestra el componente para actualizar un proveedor si updateSuppliers es verdadero y pasa los datos del proveedor a través de props
-<updatesupplier v-if="updateSuppliers" :Supplierdata="supplierStatus"></updatesupplier> -->
