@@ -21,25 +21,26 @@ class MachineryController extends Controller
     }
     public function InsertMachinery(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|unique:suppliers', // Verifica que el nombre sea único en la tabla 'suppliers'
-            'telefono' => 'required|string|unique:suppliers', // Verifica que el celular sea único en la tabla 'suppliers'
-            'direccion' => 'required|string|unique:suppliers', // Verifica que la dirección sea única en la tabla 'suppliers'
-            'email' => 'required|email|unique:suppliers', // Verifica que el email sea único en la tabla 'suppliers'
-        ]);
+        // $request->validate([
+        //     'nombre' => 'required|string|unique:machineries', // Verifica que el nombre sea único en la tabla 'machineries'
+        //     'matricula' => 'required|string|unique:machineries', // Verifica que el celular sea único en la tabla 'machineries'
+        //     'cantidad' => 'required|string|unique:machineries', // Verifica que la dirección sea única en la tabla 'machineries'
+        //     'email' => 'required|email|unique:machineries', // Verifica que el email sea único en la tabla 'machineries'
+        // ]);
 
         // Si llegas a este punto, significa que los datos son únicos y puedes proceder a registrar el proveedor.
 
-        $supplier = new Supplier;
-        $supplier->nombre = $request->input('nombre');
-        $supplier->telefono = $request->input('telefono');
-        $supplier->direccion = $request->input('direccion');
-        $supplier->email = $request->input('email');
-        $supplier->save();
-        $suppliers = Supplier::get();
+        $machinery = new Machinery;
+        $machinery->matricula = $request->input('matricula');
+        $machinery->nombre = $request->input('nombre');
+        $machinery->cantidad = $request->input('cantidad');
+        $machinery->tipo_maquinaria = $request->input('tipo_maquinaria');
+        $machinery->estado = $request->input('estado');
+        $machinery->save();
+        $machinery = machinery::get();
         $data = [
             'status' => true,
-            'supplierData' => $suppliers
+            'machineryData' => $machinery
             ];
         return response()->json($data);
 
@@ -49,5 +50,59 @@ class MachineryController extends Controller
         // ];
 
         // return response()->json($data);
+    }
+    public function updateMachinery(Request $request, $id)
+    {
+        // $request->validate([
+        //     'nombre' => 'required|string',
+        //     'telefono' => 'required|string',
+        //     'direccion' => 'required|string',
+        //     'email' => 'required|email',
+        // ]);
+
+        $machinery = Machinery::find($id);
+        $machinery->matricula = $request->input('matricula');
+        $machinery->nombre = $request->input('nombre');
+        $machinery->cantidad = $request->input('cantidad');
+        $machinery->tipo_maquinaria = $request->input('tipo_maquinaria');
+        $machinery->estado = $request->input('estado');
+        $machinery->save();
+        $machinery = machinery::get();
+        $data = [
+            'status' => true,
+            'machineryData' => $machinery
+            ];
+        return response()->json($data);
+        // $data = [
+        //     'status' => true,
+        //     'supplier' => $supplier,
+        //     'id' => $id,
+        //     'request' => $request,
+        // ];
+        // return response()->json($data);
+
+        $machinery = Machinery::get();
+        $data = [
+            'status' => true,
+            'machineryData' => $machinery
+            ];
+        return response()->json($data);
+    }
+    public function deleteMachinery($id)
+    {
+        $machinery = Machinery::find($id);
+        if (!$machinery) {
+            return response()->json(['status' => false, 'message' => 'Supplier no encontrado']);
+        }
+
+        // Realiza la eliminación del usuario
+        $machinery->delete();
+        return response()->json(['status' => true, 'message' => 'Supplier eliminado con éxito']);
+        $machinery = Machinery::get();
+        $data = [
+            'status' => true,
+            'machineryData' => $machinery
+            ];
+        return response()->json($data);
     }
 }

@@ -25,16 +25,28 @@
                                                 <v-text-field v-model="registerSuppliers.id" label="Id"></v-text-field>
                                             </v-col> -->
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="registerMachinery.nombre" label="Nombre"></v-text-field>
+                                                <v-text-field v-model="registerMachinery.matricula"
+                                                    label="Matricula"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="registerMachinery.cantidad" label="Cantidad"></v-text-field>
+                                                <v-text-field v-model="registerMachinery.nombre"
+                                                    label="Nombre"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="registerMachinery.tipo_maquinaria" label="Tipo Maquinaria"></v-text-field>
+                                                <v-text-field v-model="registerMachinery.cantidad"
+                                                    label="Cantidad"></v-text-field>
                                             </v-col>
                                             <v-col cols="12" sm="6" md="4">
-                                                <v-text-field v-model="registerMachinery.estado" label="Estado"></v-text-field>
+                                                <!-- <v-text-field v-model="registerMachinery.tipo_maquinaria"
+                                                    label="Tipo Maquinaria"></v-text-field> -->
+                                                <v-select v-model="registerMachinery.tipo_maquinaria" :items="tipo"
+                                                    :rules="[v => !!v || 'Item is required']" label="Tipo/Maquinaria"
+                                                    required></v-select>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="4">
+                                                <v-select v-model="registerMachinery.estado" :items="status"
+                                                    :rules="[v => !!v || 'Item is required']" label="ESTADO"
+                                                    required></v-select>
                                             </v-col>
 
                                         </v-row>
@@ -119,6 +131,20 @@ export default {
             tipo_maquinaria: '',
             estado: '',
         },
+        select: null,
+        tipo: [
+            'Pesada',
+            'Fragil',
+            'Ligera',
+            'Aseo',
+            'Por definir',
+        ],
+        status: [
+            'Activa',
+            'Inactiva',
+            'Mantenimiento',
+            'Varada',
+        ],
     }),
 
     computed: {
@@ -155,18 +181,18 @@ export default {
 
         editItem(item) {
             this.editedIndex = this.desserts.indexOf(item)
-            this.registerSuppliers = Object.assign({}, item)
+            this.registerMachinery = Object.assign({}, item)
             this.dialog = true
         },
 
         deleteItem(item) {
             this.editedIndex = this.desserts.indexOf(item)
-            this.registerSuppliers = Object.assign({}, item)
+            this.registerMachinery = Object.assign({}, item)
             this.dialogDelete = true
         },
 
         deleteItemConfirm() {
-            axios.delete(`/Suppliers/DeleteSuppliers/${this.registerSuppliers.id}`).then((response) => {
+            axios.delete(`/Machinery/DeleteMachinery/${this.registerMachinery.id}`).then((response) => {
                 if (response.data.status === true) {
                     // Actualiza la lista de usuarios después de la eliminación
                     // this.listSuppliers();
@@ -177,7 +203,7 @@ export default {
                     );
                 }
                 this.desserts.splice(this.editedIndex, 1)
-                this.registerSuppliers = {}
+                this.registerMachinery = {}
             }).catch((error) => {
                 console.log("Error al eliminar el Supplier: " + error);
             });
@@ -204,65 +230,65 @@ export default {
         save() {
             if (this.editedIndex > -1) {
                 //console.log("Datos enviados al modificar", this.SuppEdit);
-                axios.put(`/Suppliers/UpdateSuppliers/${this.registerSuppliers.id}`, this.registerSuppliers)
-                .then(respuesta => {
-                    if (respuesta.data.status) {
-                        console.log("Actualización exitosa");
-                        Swal.fire(
-                            'Excelente!',
-                            'You clicked the button!',
-                            'success'
+                axios.put(`/Machinery/UpdateMachinery/${this.registerMachinery.id}`, this.registerMachinery)
+                    .then(respuesta => {
+                        if (respuesta.data.status) {
+                            console.log("Actualización exitosa");
+                            Swal.fire(
+                                'Excelente!',
+                                'You clicked the button!',
+                                'success'
                             );
-                        this.desserts = respuesta.data.supplierData;
-                        // this.$parent.BackList();
-                        // this.$parent.listSuppliers();
-                    } else {
-                        console.log("Error: Los datos están duplicados");
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Algo Salio mal! (puede ser un campo vacio)',
-                        })
-                    }
-                })
-                .catch(error => {
-                    if (error.response.status == 422) {
-                        alert("Existe");
-                    }
-                    console.log("Error en servidor");
-                    console.log(error);
-                    console.log(error.response);
-                });
+                            this.desserts = respuesta.data.machineryData;
+                            // this.$parent.BackList();
+                            // this.$parent.listSuppliers();
+                        } else {
+                            console.log("Error: Los datos están duplicados");
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Algo Salio mal! (puede ser un campo vacio)',
+                            })
+                        }
+                    })
+                    .catch(error => {
+                        if (error.response.status == 422) {
+                            alert("Existe");
+                        }
+                        console.log("Error en servidor");
+                        console.log(error);
+                        console.log(error.response);
+                    });
             } else {
-                axios.post('/registerSupplier', this.registerSuppliers)
-                .then(respuesta => {
-                    if (respuesta.data.status) {
-                        console.log("Registro exitoso");
-                        Swal.fire(
-                            'Registro Exitoso!',
-                            'You clicked the button!',
-                            'success'
-                        );
-                        this.desserts = respuesta.data.supplierData;
+                axios.post('/registerMachinery', this.registerMachinery)
+                    .then(respuesta => {
+                        if (respuesta.data.status) {
+                            console.log("Registro exitoso");
+                            Swal.fire(
+                                'Registro Exitoso!',
+                                'You clicked the button!',
+                                'success'
+                            );
+                            this.desserts = respuesta.data.machineryData;
 
-                        // this.$parent.listSuppliers();
-                        // this.$parent.BackList();
-                    } else {
-                        console.log("Error: Los datos están duplicados");
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Algo salio mal',
-                        })
-                    }
-                }).catch(error => {
-                    if (error.response.status == 422) {
-                        alert("Existe");
-                    }
-                    console.log("Error en servidor");
-                    console.log(error);
-                    console.log(error.response);
-                });
+                            // this.$parent.listSuppliers();
+                            // this.$parent.BackList();
+                        } else {
+                            console.log("Error: Los datos están duplicados");
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Algo salio mal',
+                            })
+                        }
+                    }).catch(error => {
+                        if (error.response.status == 422) {
+                            alert("Existe");
+                        }
+                        console.log("Error en servidor");
+                        console.log(error);
+                        console.log(error.response);
+                    });
 
             }
             this.close()

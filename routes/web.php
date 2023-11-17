@@ -66,8 +66,8 @@ Route::get('/ViewMachinery', [MachineryController::class, 'viewMachinery'])->nam
 //consulta para traer proveedores
 // Route::get('/GetMachinery', [MachineryController::class, 'getMachinery']);
 //RegistrarProveedores
-Route::post("/registerMachinery", [Repuestos::class, "InsertMachinery"])->name("insertMachinery");
-// // editarProveedor
-// Route::put("/Repuestos/UpdateRepuestos/{id}", [Repuestos::class, 'updateRepuestos'])->name('updateRepuestos');
-// //eliminar
-// Route::delete("/Repuestos/DeleteRepuestos/{id}", [Repuestos::class, 'deleteRepuestos'])->name('deleteRepuestos');
+Route::post("/registerMachinery", [MachineryController::class, "InsertMachinery"])->name("insertMachinery");
+// editarProveedor
+Route::put("/Machinery/UpdateMachinery/{id}", [MachineryController::class, 'updateMachinery'])->name('updateMachinery');
+//eliminar
+Route::delete("/Machinery/DeleteMachinery/{id}", [MachineryController::class, 'deleteMachinery'])->name('deleteMachinery');

@@ -61,7 +61,10 @@ __webpack_require__.r(__webpack_exports__);
         cantidad: '',
         tipo_maquinaria: '',
         estado: ''
-      }
+      },
+      select: null,
+      tipo: ['Pesada', 'Fragil', 'Ligera', 'Aseo', 'Por definir'],
+      status: ['Activa', 'Inactiva', 'Mantenimiento', 'Varada']
     };
   },
   computed: {
@@ -95,24 +98,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     editItem: function editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
-      this.registerSuppliers = Object.assign({}, item);
+      this.registerMachinery = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
-      this.registerSuppliers = Object.assign({}, item);
+      this.registerMachinery = Object.assign({}, item);
       this.dialogDelete = true;
     },
     deleteItemConfirm: function deleteItemConfirm() {
       var _this2 = this;
-      axios["delete"]("/Suppliers/DeleteSuppliers/".concat(this.registerSuppliers.id)).then(function (response) {
+      axios["delete"]("/Machinery/DeleteMachinery/".concat(this.registerMachinery.id)).then(function (response) {
         if (response.data.status === true) {
           // Actualiza la lista de usuarios después de la eliminación
           // this.listSuppliers();
           sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire('Eiminado!', 'You clicked the button!', 'success');
         }
         _this2.desserts.splice(_this2.editedIndex, 1);
-        _this2.registerSuppliers = {};
+        _this2.registerMachinery = {};
       })["catch"](function (error) {
         console.log("Error al eliminar el Supplier: " + error);
       });
@@ -138,11 +141,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
       if (this.editedIndex > -1) {
         //console.log("Datos enviados al modificar", this.SuppEdit);
-        axios.put("/Suppliers/UpdateSuppliers/".concat(this.registerSuppliers.id), this.registerSuppliers).then(function (respuesta) {
+        axios.put("/Machinery/UpdateMachinery/".concat(this.registerMachinery.id), this.registerMachinery).then(function (respuesta) {
           if (respuesta.data.status) {
             console.log("Actualización exitosa");
             sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire('Excelente!', 'You clicked the button!', 'success');
-            _this4.desserts = respuesta.data.supplierData;
+            _this4.desserts = respuesta.data.machineryData;
             // this.$parent.BackList();
             // this.$parent.listSuppliers();
           } else {
@@ -162,11 +165,11 @@ __webpack_require__.r(__webpack_exports__);
           console.log(error.response);
         });
       } else {
-        axios.post('/registerSupplier', this.registerSuppliers).then(function (respuesta) {
+        axios.post('/registerMachinery', this.registerMachinery).then(function (respuesta) {
           if (respuesta.data.status) {
             console.log("Registro exitoso");
             sweetalert2__WEBPACK_IMPORTED_MODULE_0___default().fire('Registro Exitoso!', 'You clicked the button!', 'success');
-            _this4.desserts = respuesta.data.supplierData;
+            _this4.desserts = respuesta.data.machineryData;
 
             // this.$parent.listSuppliers();
             // this.$parent.BackList();
@@ -1074,6 +1077,23 @@ var render = function render() {
           }
         }, [_c("v-text-field", {
           attrs: {
+            label: "Matricula"
+          },
+          model: {
+            value: _vm.registerMachinery.matricula,
+            callback: function callback($$v) {
+              _vm.$set(_vm.registerMachinery, "matricula", $$v);
+            },
+            expression: "registerMachinery.matricula"
+          }
+        })], 1), _vm._v(" "), _c("v-col", {
+          attrs: {
+            cols: "12",
+            sm: "6",
+            md: "4"
+          }
+        }, [_c("v-text-field", {
+          attrs: {
             label: "Nombre"
           },
           model: {
@@ -1106,9 +1126,14 @@ var render = function render() {
             sm: "6",
             md: "4"
           }
-        }, [_c("v-text-field", {
+        }, [_c("v-select", {
           attrs: {
-            label: "Tipo Maquinaria"
+            items: _vm.tipo,
+            rules: [function (v) {
+              return !!v || "Item is required";
+            }],
+            label: "Tipo/Maquinaria",
+            required: ""
           },
           model: {
             value: _vm.registerMachinery.tipo_maquinaria,
@@ -1123,9 +1148,14 @@ var render = function render() {
             sm: "6",
             md: "4"
           }
-        }, [_c("v-text-field", {
+        }, [_c("v-select", {
           attrs: {
-            label: "Estado"
+            items: _vm.status,
+            rules: [function (v) {
+              return !!v || "Item is required";
+            }],
+            label: "ESTADO",
+            required: ""
           },
           model: {
             value: _vm.registerMachinery.estado,
